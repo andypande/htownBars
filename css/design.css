@@ -1,0 +1,157 @@
+body {
+    padding-top: 10px;
+}
+.dropdown.dropdown-lg .dropdown-menu {
+    margin-top: -1px;
+    padding: 6px 20px;
+}
+.input-group-btn .btn-group {
+    display: flex !important;
+}
+.btn-group .btn {
+    border-radius: 0;
+    margin-left: -1px;
+}
+.btn-group .btn:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.btn-group .form-horizontal .btn[type="submit"] {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+.form-group .form-control:last-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+#map-canvas{
+    width: 50%;
+    height: 400px;
+}
+#adv-search {
+        width: 500px;
+        margin: 0 auto;
+}
+.dropdown.dropdown-lg {
+        position: static !important;
+}
+
+.dropdown.dropdown-lg .dropdown-menu {
+        min-width: 500px;
+        margin-bottom: 60px;
+}
+
+.logoClass{
+    width: 270px;
+    left: 50%;
+    right: 50%;
+    position: relative;
+    margin-top: -50px;
+    margin-left: -135px;
+    
+}
+
+.barImage{ /*50% of the size of the image provided by shivan*/
+    width: 345px;
+    height: 342px;
+}
+.popover { /*Have to allow popover to be bigger to fit the neighborhoods map*/
+    max-width: 415px;
+}
+
+#siteInfo{ /*About this site blurb*/
+   width:100%;
+   position: relative;
+   bottom: 0;
+   margin-bottom: 50px;
+}
+#slidePictures{
+        height: 600px !important;
+        max-height: 600px;
+}
+.carousel-style{
+    color: white;
+    font-size: 24px;
+}
+.bar-description{
+        font-size: 18px;
+}
+#btn-signup{
+    margin-top: 10px;
+}
+
+.totBarsVisited{
+    padding: 2px; font-size: 20px;
+}
+.notLoggedInTotalBars{
+        padding-top: 0px;
+}
+.loggedInTotalBars{
+        padding-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .notLoggedInTotalBars{
+        padding-top: 10px;
+    }
+    .loggedInTotalBars{
+        padding-top: 15px;
+    }
+    .totBarsVisited{
+    padding: 2px; font-size: 16px;
+    }
+    .carousel-style{
+    color: white;
+    font-size: 18px;
+    }
+    #slidePictures{
+        height: 300px !important;
+        max-height: 300px;
+    }
+    #adv-search {
+        width: 100%;
+    }
+    #map-canvas{
+    width: 100%;
+    height: 300px;
+    }
+    .dropdown.dropdown-lg .dropdown-menu {
+        font-size: 12px;
+        white-space: normal !important;
+        margin-bottom: 60px !important;
+
+    }
+    .form-horizontal{
+        width: 115% !important;   
+    }
+    .ssk-sticky{
+        display: block !important;
+    }
+    .bar-description{
+        font-size: 12px;
+        background-color: black;
+        opacity: 0.7;
+    }
+    .navbar-right{
+        float: right;
+    }
+    .iphoneFiveAdjust{
+        font-size: 14px !important;
+    }
+}
+
+@media screen and (max-width: 979px){
+    .input-group .form-control{
+        width: 85%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .totBarsVisited{
+    font-size: 13px;
+    }
+}

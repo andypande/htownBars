@@ -1,0 +1,92 @@
+{
+	"errorMessage": null,
+	"schedule": [{
+			"sequenceKeyDTO": null,
+			"sequenceInfoDTO": {
+				"credit": null,
+				"sequenceStartDateTime": "May 2, 2016 12:00:00 AM",
+				"sequenceEndDateTime": "May 3, 2016 12:00:00 AM",
+				"legsPerDutyPeriod": null,
+				"firstLegDepartureAirport": null,
+				"layoverStations": null,
+				"startDate": 1462147200000,
+				"endtDate": 1462233600000,
+				"type": "D",
+				"ttot": false,
+				"orig": null,
+				"term": null,
+				"quals": null,
+				"openSequenceOrDropRequested": null,
+				"creditedRemoval": false,
+				"ttinhibited": false,
+				"durationInDays": 0,
+				"creditThisMonth": null,
+				"creditNextMonth": null,
+				"durationValidityCode": null,
+				"ttInhibited": false,
+				"spp": false
+			},
+
+			"legInfoDTO": [{
+					"dutyPeriodInfo": [{
+						"cityPair": "DFW to SLC",
+						"fltNo": "2510",
+						"depDate": "19MAY",
+						"depTime": "0855",
+						"arrTime": "1046",
+						"Status": "Delayed",
+						"eqp": "SP80",
+						"dutyPeriod": "1",
+						"legNo": "1"
+					}, {
+						"cityPair": "SLC to DFW",
+						"fltNo": "2510",
+						"depDate": "19MAY",
+						"depTime": "1139",
+						"arrTime": "1524",
+						"status": "",
+						"eqp": "SP80",
+						"dutyPeriod": "1",
+						"legNo": "2"
+					}]
+				},
+				"dutyPeriodInfo": [{
+					"cityPair": "DFW to SLT",
+					"fltNo": "2510",
+					"depDate": "19MAY",
+					"depTime": "0855",
+					"arrTime": "1046",
+					"Status": "Delayed",
+					"eqp": "SP80",
+					"dutyPeriod": "2",
+					"legNo": "1"
+				}, {
+					"cityPair": "SLT to DFW",
+					"fltNo": "2510",
+					"depDate": "19MAY",
+					"depTime": "1139",
+					"arrTime": "1524",
+					"status": "",
+					"eqp": "SP80",
+					"dutyPeriod": "2",
+					"legNo": "2"
+
+				}],
+
+
+				"legal": false,
+				"qlaStatus": null
+
+			}],
+		"success": true,
+		"actualNumOfSeqsMatchingCriteria": 0,
+		"countExceedsMaxLimit": false,
+		"failedContinuityOrIOEOrSuperN": null,
+		"successMessage": null,
+		"buCode": null,
+		"airlineCode": null,
+		"employeeNumber": 0,
+		"smEmployeeNumber": 0,
+		"version": "1",
+		"action": ""
+	}
