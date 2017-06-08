@@ -24,9 +24,11 @@ angular.module('houstonBars', ['ngAnimate', 'ui.bootstrap', 'angular-storage', '
 angular.module('houstonBars').controller('InputController', ['$scope', '$http', function($scope, $http) {
     $scope.userInfo = {};
     $scope.loggedInUserInfo = {};
+    $scope.loggedInUserInfo.showClassicMenu = false;
+    $scope.loggedInUserInfo.showNewMenu = true;
     $scope.createUser = {};
     $scope.loggedIn = false;
-    $scope.totalBarCount = 150;
+    $scope.totalBarCount = 186;
     $scope.login = function(){
         if($scope.userInfo.username && $scope.userInfo.password){
             $http({
@@ -112,7 +114,14 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
     $scope.logOut = function(){
             $scope.loggedIn = false;
             $scope.userInfo = {};
-            $scope.loggedInUserInfo = {}; 
+            $scope.loggedInUserInfo = {};
+            $scope.loggedInUserInfo.showClassicMenu = false;
+            $scope.loggedInUserInfo.showNewMenu = true;
+            $(".loginHelper").popover({
+            trigger: "click",
+            placement: "bottom",
+            html: true
+            }) 
     }
     
     $scope.createNewUser = function(){
@@ -150,8 +159,9 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
     }
     $scope.barAreas = {
         Midtown: false,
-        Downtown: false,
+        EaDo: false,
         Heights: false,
+        MarketSquare: false,
         Washington: false,
         Montrose: false,
         Rice: false,
@@ -168,6 +178,11 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
 			html: true,
 			placement: "bottom"
 		});
+        $(".loginHelper").popover({
+            trigger: "click",
+            placement: "bottom",
+            html: true
+        })
     
 
     var barResults = $scope.retrieveBarResults = function(){
@@ -221,39 +236,74 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
 
     }
 
-    function codeAddress(addressInput){
+    var delay = 100;
+    function codeAddress(addressArray){
         var geocoder = new google.maps.Geocoder();
-        geocoder.geocode({
-           'address': addressInput 
-        }, function(results, status){
-            if (status == google.maps.GeocoderStatus.OK) {
-                var myOptions = {
-                    zoom: 20,
-                    center: results[0].geometry.location,
+        var latlng = new google.maps.LatLng(29.7604, -95.3698);
+        var myOptions = {
+                    zoom: 12,
+                    center: latlng,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
-                }
-            var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+        }
+        var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);        
+        for(var x=0; x<addressArray.length; x++){
+            geocodeAddress(geocoder, addressArray[x], map);
+        }
+    }
 
-            var marker = new google.maps.Marker({
-               map: map,
-               position: results[0].geometry.location
-            });      
+    var prev_infoWindow = false;
+    function geocodeAddress(geocoder, address, map){
+      var infoWindow = new google.maps.InfoWindow({
+          content: address
+      });
 
+       geocoder.geocode({
+            'address': address + ", Houston, Tx"
+        }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location,
+                    animation: google.maps.Animation.DROP
+                });
+                map.setCenter(results[0].geometry.location);
+                google.maps.event.addListener(marker, 'click', (function(marker){
+                    return function(){
+                        if(prev_infoWindow){
+                            prev_infoWindow.close();
+                        }
+                        prev_infoWindow = infoWindow;
+                        map.setZoom(13);
+                        map.setCenter(marker.getPosition());
+                        infoWindow.open(map, marker);
+                    }
+                })(marker));
+            }
+            else {
+                 alert('Geocode was not successful for the following reason: ' + status);
             }
         });
-
 
     }
 
 
     function loadUserEnteredPreferences(){
-            $('.rating').each(function(){
-                        if (this.value > 0){   									
+            $('.checkClass').each(function(){
+                        if (this.checked){   									
                             var fieldName = this.id;
-                            var fieldValue = this.value;
+                            var fieldValue = "5";
                             searchCriteriaDOM[fieldName] = fieldValue;
                         }
-            });	
+            });
+
+            // Code to utilize with old rating system  
+            //$('.rating').each(function(){
+            //             if (this.value > 0){   									
+            //                 var fieldName = this.id;
+            //                 var fieldValue = this.value;
+            //                 searchCriteriaDOM[fieldName] = fieldValue;
+            //             }
+            // });	
     }
 
     function aggrateUserEnteredCriteria(){
@@ -361,7 +411,6 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
             $("#finalWinner").empty();
         }
         $("#barInfo").prepend(barHtml);
-        $('#progressModal').modal('hide');
         window.scrollTo(0, 0);
         searchCriteriaDOM ={};
         getSlides(displayArray);
@@ -379,12 +428,15 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
             content: "Click to Mark Bar As Visited"
 		  });
         }
+        $('#progressModal').modal('hide');
+
 
     }
     
     function getSlides(bestResultsArray){
         //Do some logic adjustment for arrays less than length 10
         var slidesToShow = (bestResultsArray.length < 11) ? bestResultsArray.length : 11;
+        var mapAddressesArray = [];
         for(var x=bestResultsArray.length-1; x>bestResultsArray.length-slidesToShow; x--){
             slides.push({
                 image: bestResultsArray[x].Image,
@@ -396,8 +448,12 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
                 Yelp: bestResultsArray[x].YelpWebsite,
                 Phone: bestResultsArray[x].PhoneNumber,
                 id: currIndex++
-            });   
+            });
+            mapAddressesArray.push(bestResultsArray[x].BarName);   
         }
+        setTimeout(function(){
+            codeAddress(mapAddressesArray);
+        }, 1000);
     }
     
 }]);

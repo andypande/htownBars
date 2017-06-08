@@ -13,23 +13,19 @@ body {
     margin-left: -1px;
 }
 .btn-group .btn:last-child {
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-radius: 4px;
 }
 .btn-group .form-horizontal .btn[type="submit"] {
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
+  border-radius: 4px;
 }
 .form-horizontal .form-group {
     margin-left: 0;
     margin-right: 0;
 }
 .form-group .form-control:last-child {
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
+    border-radius: 4px;
 }
 #map-canvas{
-    width: 50%;
     height: 400px;
 }
 #adv-search {
@@ -93,6 +89,9 @@ body {
 .loggedInTotalBars{
         padding-top: 10px;
 }
+.popover{
+    font-size: 12px;
+}
 
 @media screen and (max-width: 768px) {
     .notLoggedInTotalBars{
@@ -150,8 +149,18 @@ body {
     }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 375px) {
     .totBarsVisited{
     font-size: 13px;
+    }
+    h4{
+    font-size: 15px;
+    }
+    .barAreas{
+    font-size: 14px;
+    }
+    .barImage{
+    width: 250px; 
+    height: 300px;
     }
 }
