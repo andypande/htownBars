@@ -168,8 +168,8 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
         RiverOaks: false
     }
     $scope.showAreas = false;    
-    
-    
+
+
     var barAreasImage = '<img class="barImage" src="img/NeighborhoodGoogMaps.PNG"/>';
 		
 		$(".barAreaHelper").popover({
@@ -453,7 +453,13 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
         }
         setTimeout(function(){
             codeAddress(mapAddressesArray);
-        }, 1000);
+            $('.slickConfig').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                infinite: false
+            });
+
+        }, 200);
     }
     
 }]);
