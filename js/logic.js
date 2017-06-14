@@ -451,15 +451,33 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
             });
             mapAddressesArray.push(bestResultsArray[x].BarName);   
         }
+        codeAddress(mapAddressesArray);
         setTimeout(function(){
-            codeAddress(mapAddressesArray);
-            $('.slickConfig').slick({
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                infinite: false
-            });
+            if($(".slick-initialized").length>0){
+                $('.slickConfig').slick('removeSlide', null, null, true); /* Remove current slides elements, in case that you want to show new slides. */
+                $('.slickConfig').slick('unslick'); /* ONLY remove the classes and handlers added on initialize */
+                $('.slickConfig').slick(getSliderSettings()); /* Initialize the slick again */
+                $(".slick-slide").trigger("click");
+            }
+            else{
+                $('.slickConfig').slick(getSliderSettings()); /* Initialize the slick again */
+                $(".slick-slide").trigger("click");
+            }
 
         }, 200);
     }
+
+    function getSliderSettings(){
+        return {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: false,
+            swipeToSlide: true,
+            autoplay: true,
+            autoplaySpeed: 5000,
+            dots: true
+        }
+    }
+
     
 }]);

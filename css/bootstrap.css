@@ -5590,8 +5590,7 @@ button.close {
     bottom: 20px;
   }
 }
-.clearfix:before,
-.clearfix:after,
+
 .container:before,
 .container:after,
 .container-fluid:before,
@@ -5618,7 +5617,7 @@ button.close {
 .panel-body:after,
 .modal-footer:before,
 .modal-footer:after {
-  display: table;
+  display: block;
   content: " ";
 }
 .clearfix:after,

@@ -10,8 +10,8 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/social-share-kit.css" media="all" type="text/css"/>
         <link rel="stylesheet" href="css/toggleIcon.css" media="all" type="text/css"/>
-        <link rel="stylesheet" type="text/css" href="css/slick.min.css"/>
-        <link rel="stylesheet" type="text/css" href="css/slick-theme-min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/slick.css"/>
+        <link rel="stylesheet" type="text/css" href="css/slick-theme.css"/>
 
 
         <script type="text/javascript" src="https://cdn.auth0.com/js/lock-7.12.min.js"></script>
@@ -36,12 +36,15 @@
             $(document).ready(function(){
                 $(".rating").rating('refresh', {showCaption: false});
                 $("#searchMenu").css("min-width", $("#adv-search").width());               
-                $('body').on('click', function (e) {
+			    $("body").on('click', function (e) {
                     //did not click a popover toggle or popover
-                    if ($(e.target).data('toggle') !== 'popover'
-                        && $(e.target).parents('.popover.in').length === 0) { 
-                        $('[data-toggle="popover"]').popover('hide');
-                    }
+                    $('[data-original-title]').each(function () {
+                    //Hide popovers when user clicks anywhere else in document body
+                    //Code adapted from https://stackoverflow.com/questions/11703093/how-to-dismiss-a-twitter-bootstrap-popover-by-clicking-outside?page=1&tab=votes#tab-top
+                        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {                
+                            (($(this).popover('hide').data('bs.popover')||{}).inState||{}).click = false  // fix for BS 3.3.6
+                        }
+                    });
                 });
 		    });
         </script>  
@@ -370,11 +373,11 @@
         <div style="display:none;" id="barsList">
              <!--<div class="well" id="barInfo"><!--Winning Bar info is dynamically inserted here</div>-->
             
-            <h3 style="margin-bottom:20px;">Your Top Houston Bar Recommendations:</h3>
+            <h3 class="resizeForSmallScreens" style="margin-bottom:20px;">Your Top Houston Bar Recommendations:</h3>
         
-                <div class="col-xs-12" style="margin-bottom:20px;">
+                <div style="margin-bottom:20px;">
                     <div class="slickConfig">
-                        <div ng-repeat="slide in slides" style="position: relative">
+                        <div ng-repeat="slide in slides" style="position: relative; background-color: #e6e6e6;">
                             <img id="slidePictures" ng-src="{{slide.image}}" style="margin:auto;">
                             <div class="textOnPicture col-md-12 col-sm-12 col-xs-12">
                                 <p class="carousel-style"> <a style="background-color: black; color:white; text-decoration: underline;" target="_blank" ng-href="{{slide.Website}}"> {{slide.BarName}} </a>
@@ -392,7 +395,7 @@
                         </div>
                     </div>
                 </div>
-         <h3 style="margin-bottom:20px;"> Your Recommendations Map:</h3>
+         <h3 style="margin-bottom:20px;"> Recommendations Map:</h3>
         <div style="margin-bottom:20px;" id="map-canvas" class="col-xs-12"></div>
 
         </div><!--End of Bars List Div-->

@@ -114,17 +114,27 @@ body {
     height: 300px;
     }
     .textOnPicture{
-        top: 100px !important;
+        top: 135px !important;
     }
     #slidePictures{
-        height: 300px !important;
-        max-height: 300px;
+        height: 350px !important;
+        max-height: 350px;
+    }
+    .slick-dots li
+    {
+    margin: 0px !important;
     }
 }
 
 @media screen and (max-width: 414px) {
     .textOnPicture{
         top: 125px;
+    }
+    .totBarsVisited{
+        font-size: 14px !important;
+    }
+    .resizeForSmallScreens{
+        font-size: 22px !important;
     }
 }
 
