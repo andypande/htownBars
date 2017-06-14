@@ -452,16 +452,17 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
             mapAddressesArray.push(bestResultsArray[x].BarName);   
         }
         codeAddress(mapAddressesArray);
-        setTimeout(function(){
-            if($(".slick-initialized").length>0){
+        setTimeout(function(){ //After the Slick Div is displayed on the UI, we can initialize the slick plugin
+            if($(".slick-initialized").length>0){ //If slick initialized previously, then we need to delete all slick slides and start over
                 $('.slickConfig').slick('removeSlide', null, null, true); /* Remove current slides elements, in case that you want to show new slides. */
                 $('.slickConfig').slick('unslick'); /* ONLY remove the classes and handlers added on initialize */
                 $('.slickConfig').slick(getSliderSettings()); /* Initialize the slick again */
-                $(".slick-slide").trigger("click");
+                $(".slick-slide").trigger("click"); //Must trigger a click on the slider so that slider width is initalized correctly and swipe events work
             }
             else{
                 $('.slickConfig').slick(getSliderSettings()); /* Initialize the slick again */
-                $(".slick-slide").trigger("click");
+                $(".slick-slide").trigger("click"); //Must trigger a click on the slider so that slider width is initalized correctly and swipe events work
+                //Other occurances of this issue are seen at: https://github.com/kenwheeler/slick/issues/790 , https://stackoverflow.com/questions/43216603/slick-initial-width-calculation-incorrect, https://github.com/kenwheeler/slick/issues/2717
             }
 
         }, 200);
