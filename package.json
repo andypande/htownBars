@@ -1,0 +1,23 @@
+{
+  "name": "htownBars",
+  "version": "1.0.0",
+  "description": "Website for finding cool bars around Houston, Texas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andypande/htownBars.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andypande/htownBars/issues"
+  },
+  "homepage": "https://github.com/andypande/htownBars#readme",
+  "dependencies": {
+    "lebab": "^3.0.3"
+  }
+}
