@@ -20,8 +20,8 @@
 
 -Big implementation: Wrap the website into an app using one of these websites http://mashable.com/2013/12/03/build-mobile-apps/#EYpqafiVZqq1 or the website app packaging software
 */
-angular.module('houstonBars', ['ngAnimate', 'ui.bootstrap', 'angular-storage', 'angular-jwt', 'ngRoute']);
-angular.module('houstonBars').controller('InputController', ['$scope', '$http', function($scope, $http) {
+angular.module('houstonBars', ['ngAnimate', 'ui.bootstrap', 'ngRoute']);
+angular.module('houstonBars').controller('InputController', ['$scope', '$http', ($scope, $http) => {
     $scope.userInfo = {};
     $scope.loggedInUserInfo = {};
     $scope.loggedInUserInfo.showClassicMenu = false;
@@ -29,16 +29,16 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
     $scope.createUser = {};
     $scope.loggedIn = false;
     $scope.totalBarCount = 186;
-    $scope.login = function(){
+    $scope.login = () => {
         if($scope.userInfo.username && $scope.userInfo.password){
             $http({
                 method: 'GET',
                 url: 'api.php/users?transform=1',
                 cache: true
-            }).success(function(userArray, status){
-                var accessGranted = false;
+            }).success((userArray, status) => {
+                let accessGranted = false;
                 var userArray = userArray.users;
-                for(var i=0; i<userArray.length; i++){
+                for(let i=0; i<userArray.length; i++){
                     if(userArray[i].email === $scope.userInfo.username.toLowerCase() && userArray[i].password === $scope.userInfo.password )
                         {
                             accessGranted = true;
@@ -60,13 +60,13 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
                     alert("Please register for an account or re-enter login info and try again.");
                 }
 
-            }).error(function(data, status){
+            }).error((data, status) => {
                 alert("Processing Data Error:" + status);
             });
         }
     }
-    $scope.addToFavoritesForUser = function(barName, userInfo){
-        var listOfBars;
+    $scope.addToFavoritesForUser = (barName, userInfo) => {
+        let listOfBars;
         if(userInfo.favoriteBars){
             listOfBars = userInfo.favoriteBars + "," + barName;
         }
@@ -77,19 +77,19 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
             method: 'PUT',
             url: 'api.php/users/' + userInfo.id,
             data: JSON.stringify({"favoriteBars":listOfBars})
-        }).success(function(data, status){
+        }).success((data, status) => {
             if(status===200){
                 alert(barName + " Favorited.");
             }
             $scope.loggedInUserInfo.favoriteBars = listOfBars;
-        }).error(function(data, status){
+        }).error((data, status) => {
             alert("Processing Data Error:" + status);
         });
         
     }
     
-    $scope.addToVisitedForUser = function(barName, userInfo){
-        var listOfBars;
+    $scope.addToVisitedForUser = (barName, userInfo) => {
+        let listOfBars;
         if(userInfo.barsVisited){
             listOfBars = userInfo.barsVisited + "," + barName;
         }
@@ -100,18 +100,18 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
             method: 'PUT',
             url: 'api.php/users/' + userInfo.id,
             data: JSON.stringify({"barsVisited":listOfBars})
-        }).success(function(data, status){
+        }).success((data, status) => {
             if(status===200){
                 alert(barName + " Marked As Visited.");
             }
             $scope.loggedInUserInfo.barsVisited = listOfBars;
-        }).error(function(data, status){
+        }).error((data, status) => {
             alert("Processing Data Error:" + status);
         });
         
     }
     
-    $scope.logOut = function(){
+    $scope.logOut = () => {
             $scope.loggedIn = false;
             $scope.userInfo = {};
             $scope.loggedInUserInfo = {};
@@ -124,13 +124,13 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
             }) 
     }
     
-    $scope.createNewUser = function(){
+    $scope.createNewUser = () => {
         if($scope.createUser.firstName && $scope.createUser.lastName && $scope.createUser.email && $scope.createUser.password){
             $http({
                 method: 'POST',
                 url: 'api.php/users',
                 data: JSON.stringify($scope.createUser)
-            }).success(function(data, status){
+            }).success((data, status) => {
                 if(status===200){
                         alert("New User record created for " + $scope.createUser.firstName + " " + $scope.createUser.lastName);
                         $scope.createUser = {};
@@ -139,7 +139,7 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
                         $("#login-modal").modal('hide');
 
                 }
-            }).error(function(data, status){
+            }).error((data, status) => {
                 alert("Processing Data Error:" + status);
             });
         }
@@ -149,11 +149,11 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
     $scope.userInput = { barArea: ""}; //user input for text field
     $scope.myInterval = 6500; //how often to rotate slides
     $scope. noWrapSlides = false;
-    var slides = $scope.slides = [];
-    var currIndex = 0; //Needed for adding slides to the carousel
+    let slides = $scope.slides = [];
+    let currIndex = 0; //Needed for adding slides to the carousel
     var barsListArray = []; 
-    var searchCriteriaDOM ={};
-    $scope.enterPressed = function(keyEvent){ //Search for bars when Enter/Return key pressed
+    let searchCriteriaDOM ={};
+    $scope.enterPressed = keyEvent => { //Search for bars when Enter/Return key pressed
         if(keyEvent.which === 13) //Enter key
             barResults();
     }
@@ -170,7 +170,7 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
     $scope.showAreas = false;    
     
     
-    var barAreasImage = '<img class="barImage" src="img/NeighborhoodGoogMaps.PNG"/>';
+    const barAreasImage = '<img class="barImage" src="img/NeighborhoodGoogMaps.PNG"/>';
 		
 		$(".barAreaHelper").popover({
 			trigger: "click",
@@ -185,29 +185,29 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
         })
     
 
-    var barResults = $scope.retrieveBarResults = function(){
+    var barResults = $scope.retrieveBarResults = () => {
         $("#progressModal").modal('show');
         loadUserEnteredPreferences();
         $http({
             method: 'GET',
             url: 'api.php/barsList?transform=1',
             cache: true
-        }).success(function(data, status){
+        }).success((data, status) => {
             barsListArray = [];
 			barsListArray = data.barsList;
             aggrateUserEnteredCriteria();
-        }).error(function(data, status){
+        }).error((data, status) => {
             alert("Processing Data Error:" + status);
         });        
         $("#searchMenu").css("min-width", $("#adv-search").width());
         $(".dropdown").removeClass("open");
     }
     
-    var displayBarInfo = function(){
-        var displayhtml = '<h5><ul>';
-        var barName = arguments[1];
-        var barNameAddress = barName + " Houston, Tx";
-        for(var key in arguments[0])
+    const displayBarInfo = function(){
+        let displayhtml = '<h5><ul>';
+        const barName = arguments[1];
+        const barNameAddress = barName + " Houston, Tx";
+        for(const key in arguments[0])
             {
                 if(!(key.indexOf("Rating")>-1) && !(key.indexOf("areaToShow")>-1) && !(key.indexOf("Image")>-1)){
                 switch(key){
@@ -229,46 +229,46 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
             }
         displayhtml += '</h5></ul>';
         return displayhtml;
-    }
+    };
 
     var Bar = function(){
         var BarName, Address, PhoneNumber, Website, YelpWebsite, GoogleRating, YelpRating, Description;
 
     }
 
-    var delay = 100;
+    const delay = 100;
     function codeAddress(addressArray){
-        var geocoder = new google.maps.Geocoder();
-        var latlng = new google.maps.LatLng(29.7604, -95.3698);
-        var myOptions = {
+        const geocoder = new google.maps.Geocoder();
+        const latlng = new google.maps.LatLng(29.7604, -95.3698);
+        const myOptions = {
                     zoom: 12,
                     center: latlng,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-        var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);        
-        for(var x=0; x<addressArray.length; x++){
+        };
+        const map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);        
+        for(let x=0; x<addressArray.length; x++){
             geocodeAddress(geocoder, addressArray[x], map);
         }
     }
 
-    var prev_infoWindow = false;
+    let prev_infoWindow = false;
     function geocodeAddress(geocoder, address, map){
-      var infoWindow = new google.maps.InfoWindow({
+      const infoWindow = new google.maps.InfoWindow({
           content: address
       });
 
        geocoder.geocode({
             'address': address + ", Houston, Tx"
-        }, function (results, status) {
+        }, (results, status) => {
             if (status == google.maps.GeocoderStatus.OK) {
-                var marker = new google.maps.Marker({
+                const marker = new google.maps.Marker({
                     map: map,
                     position: results[0].geometry.location,
                     animation: google.maps.Animation.DROP
                 });
                 map.setCenter(results[0].geometry.location);
-                google.maps.event.addListener(marker, 'click', (function(marker){
-                    return function(){
+                google.maps.event.addListener(marker, 'click', (marker => {
+                    return () => {
                         if(prev_infoWindow){
                             prev_infoWindow.close();
                         }
@@ -276,7 +276,7 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
                         map.setZoom(13);
                         map.setCenter(marker.getPosition());
                         infoWindow.open(map, marker);
-                    }
+                    };
                 })(marker));
             }
             else {
@@ -290,8 +290,8 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
     function loadUserEnteredPreferences(){
             $('.checkClass').each(function(){
                         if (this.checked){   									
-                            var fieldName = this.id;
-                            var fieldValue = "5";
+                            const fieldName = this.id;
+                            const fieldValue = "5";
                             searchCriteriaDOM[fieldName] = fieldValue;
                         }
             });
@@ -307,8 +307,8 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
     }
 
     function aggrateUserEnteredCriteria(){
-        var areasSelected= [];
-        for(var areas in $scope.barAreas){
+        const areasSelected= [];
+        for(const areas in $scope.barAreas){
             if($scope.barAreas[areas]){
                 areasSelected.push(areas); //Add areas selected from checkboxes into a list
             }
@@ -318,7 +318,7 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
         }else{
             $scope.showAreas = false;    
         }
-        var favoriteBars = [];
+        let favoriteBars = [];
 
         if($scope.loggedInUserInfo.showFavorites && $scope.loggedIn && $scope.loggedInUserInfo.favoriteBars){ //Logic to handle prioritizing favorites in the list above others
             favoriteBars = $scope.loggedInUserInfo.favoriteBars.split(",");
@@ -326,11 +326,11 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
 
         
             //if(!$.isEmptyObject(searchCriteriaDOM)){ //Make sure user has actually entered some values
-                  $.each(barsListArray, function(barIndex){ //Loop through array of bars
-                      var aggregateBarRating = 0;
+                  $.each(barsListArray, barIndex => { //Loop through array of bars
+                      let aggregateBarRating = 0;
                       barsListArray[barIndex].aggregateRating = 0;
                       barsListArray[barIndex].areaToShow = false;
-                      for(var i=0; i<favoriteBars.length; i++){
+                      for(let i=0; i<favoriteBars.length; i++){
                             if(favoriteBars[i]===barsListArray[barIndex].BarName){
                                 aggregateBarRating+=15; //add 15 points to aggregate rating to bring the favorites to the top
                             }
@@ -339,7 +339,7 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
                       {
                           barsListArray[barIndex].areaToShow = true;
                       }
-                    for(var userInput in searchCriteriaDOM){ //Loop through all properties in the user input searchCriteria
+                    for(const userInput in searchCriteriaDOM){ //Loop through all properties in the user input searchCriteria
                           if(userInput in barsListArray[barIndex]) //Check if user input rating exists within current bar
                           {
                             aggregateBarRating += searchCriteriaDOM[userInput] * barsListArray[barIndex][userInput];
@@ -356,19 +356,19 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
 
     function calculateBestBarOption(){
         var myBar = new Bar;
-        var barWinnerIndex;
-        var barRating = 0;
+        let barWinnerIndex;
+        let barRating = 0;
         var barHtml = '';
-        var displayArray = [];
+        let displayArray = [];
         slides = $scope.slides = [];
-        var visitedBars = [];
+        let visitedBars = [];
         if($scope.loggedInUserInfo.hideVisited && $scope.loggedIn && $scope.loggedInUserInfo.barsVisited){ //Logic to handle hiding certain visited bars if user selects to do so
             visitedBars = $scope.loggedInUserInfo.barsVisited.split(",");
         }
-        var barArrayIndex = barsListArray.length;
+        let barArrayIndex = barsListArray.length;
         while(barArrayIndex--){
             if(visitedBars.length>0){
-                for(var i=0; i<visitedBars.length; i++){
+                for(let i=0; i<visitedBars.length; i++){
                     if(visitedBars[i]===barsListArray[barArrayIndex].BarName){
                         barsListArray.splice(barArrayIndex, 1); //skip bars that are marked as visited if the user selects they don't wish to view this bar anymore
                     }
@@ -385,7 +385,7 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
         if((displayArray.length == 0)) //If no bars selected, we can set the final display array as the array retrieved initially from DB
             displayArray = barsListArray;
 
-        $.each(displayArray, function(key, bar){ 
+        $.each(displayArray, (key, bar) => { 
             if((bar.aggregateRating > barRating)){   //Bar with the higest rating should be displayed
                 barRating = bar.aggregateRating;
                 for(var myKey in bar){
@@ -400,7 +400,7 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
 
         });
 
-        displayArray.sort(function(a,b){ //sorts array with highest aggregate rating at bottom
+        displayArray.sort((a, b) => { //sorts array with highest aggregate rating at bottom
             return a.aggregateRating - b.aggregateRating;                  
         });
         var barHtml = "<div id='finalWinner'><h3> The Top Houston Bar for you is " + myBar.BarName + "</h3>";
@@ -435,9 +435,9 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
     
     function getSlides(bestResultsArray){
         //Do some logic adjustment for arrays less than length 10
-        var slidesToShow = (bestResultsArray.length < 11) ? bestResultsArray.length : 11;
-        var mapAddressesArray = [];
-        for(var x=bestResultsArray.length-1; x>bestResultsArray.length-slidesToShow; x--){
+        const slidesToShow = (bestResultsArray.length < 11) ? bestResultsArray.length : 11;
+        const mapAddressesArray = [];
+        for(let x=bestResultsArray.length-1; x>bestResultsArray.length-slidesToShow; x--){
             slides.push({
                 image: bestResultsArray[x].Image,
                 BarName: bestResultsArray[x].BarName,
@@ -451,9 +451,9 @@ angular.module('houstonBars').controller('InputController', ['$scope', '$http', 
             });
             mapAddressesArray.push(bestResultsArray[x].BarName);   
         }
-        setTimeout(function(){
-            codeAddress(mapAddressesArray);
-        }, 1000);
+         setTimeout(() => {
+             codeAddress(mapAddressesArray);
+         }, 1000);
     }
     
 }]);
